@@ -1,0 +1,19 @@
+container {
+    padding: 5px 25px 0px 50px;
+}
+
+header {
+    min-height: 1em;
+}
+
+.my-btn {
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px blue solid;
+}
+
+#name-box, #phrase-box {
+    border-radius: 5ps;
+    border: 1px black solid;
+}
+

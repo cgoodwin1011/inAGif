@@ -73,7 +73,7 @@ body {
     position: absolute;
     top: 0;
     bottom: 0;
-    border-left: 2px red solid;
+    border-left: 1px #C7E2FF solid;
 }
 
 #everything {
@@ -84,10 +84,11 @@ body {
 }
 
 #form-label {
+    padding-top: 10px;
     color: #9FB5CC;
     /* color: #C7E2FF; */
     font-family: 'Orbitron', sans-serif;
-    padding-left: 10px;
+    /* padding-left: 10px; */
 }
 
 #gif-holder {
@@ -106,6 +107,8 @@ header {
 
 #instructions {
     padding-left:25px;
+    padding-top: 10px;
+    text-align: left;
     color: #C7E2FF;
     /* text-align: right; */
     font-family: 'Orbitron', sans-serif;
@@ -123,6 +126,7 @@ header {
     font-family: 'Orbitron', sans-serif;
     /* font-family: 'Audiowide', cursive; */
     padding: 5px;
+    padding-top: 25px;
     padding-left: 25px;
     font-size: 3em;
 }
@@ -139,6 +143,7 @@ header {
     /* background-color: ; */
     
 }
+
 .row {
     /* border: 2px green dashed !important; */
 }
@@ -149,7 +154,7 @@ header {
     /* right: 0; */
     bottom:0;
     background-color: slategray;
-    border-left: 1px #C7E2FF solid;
+    /* border-left: 1px #C7E2FF solid; */
     min-height: 1000px;
     height: 100%;
 }

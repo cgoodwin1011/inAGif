@@ -61,20 +61,24 @@
   </header>
   <div id="everything" class="container-fluid">
     <div id="row-main" class="row">
-      <div id="gif-holder" class="col-md-9">
+      <div id="gif-holder" class="col-md-9 col-sm-9 col-border">
         <h2 id="instructions">Your gifs will appear here</h2>
       </div>
-      <div id="sidebar-right" class="col-md-3">
+      <div id="sidebar-right" class="col-md-3 col-sm-3 col-border">
         <div id="add-your-own" class=row>
+          <h3 id="form-label">Add your own!</h3>
           <form>
-            <h3>Add your own!</h3>
-            <p>Name: <input id="name-box" type="text" label="name here"></p>
-            <p>Phrase: <input id="phrase-box" type="text" label="name here"></p>
-            <button class="btn-gif" type="submit">Add</button>
+            <!-- <p>Name:<br><input id="name-box" type="text" label="name here"></p>
+            <p>Button Label:<br><input id="phrase-box" type="text" label="phrase here"></p> -->
+            <p><input id="name-box" type="text" value="character name"></p>
+            <p><input id="phrase-box" type="text" value="button phrase"></p>
+
+            <button class="btn-submit" type="submit">Add</button>
           </form>
         </div>
-        <h3 id="banner">Click button to display gifs</h3>
+        
         <div id="buttons-holder" class="row">
+          <h3 id="banner">Click button to display gifs</h3>
           <button data-person="Captain Kirk" class="btn-gif">
             To boldy go ...
           </button>
@@ -118,13 +122,13 @@
           var results = response.data;
 
           // Looping over every result item
-          
           for (var i = 0; i < results.length; i++) {
-            // console.log(results[i]);
-
+            console.log(results[i]);
+            
             // Only taking action if the photo has an appropriate rating
             if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
               // Creating a div with the class "item"
+              
               var gifDiv = $("<div class='item'>");
               gifDiv.attr('id', i+"-set");
 
@@ -132,31 +136,36 @@
               var rating = results[i].rating;
               
               // Creating a paragraph tag with the result item's rating
-              var p = $("<p>").text("Rating: " + rating);
+              var p = $("<p class='rating'>").text("Rating: " + rating);
               
               // get name to display
               var name = "<p>"+person+"</p>";
 
               // Creating an image tag
               var personImage = $("<img>");
-
-              // Giving the image tag an src attribute of a proprty pulled off the
-              // result item
+                
+              // acquiring info for still/antimated gifs
               personImage.attr("src", results[i].images.fixed_height.url);
-              
-              // Appending the paragraph and personImage we created to the "gifDiv" div we created
-              
+              personImage.attr("data-animate", results[i].images.fixed_height.url);
+              personImage.attr("data-still", results[i].images.fixed_height_still.url);
+              personImage.attr("state", "still");
+
+              // console.log(name);
+              // console.log(p);
+              // console.log(personImage)
+
               gifDiv.append(name);
               gifDiv.append(personImage);
               gifDiv.append(p);
-
-              // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
-              $("#gifs-appear-here").prepend(gifDiv);
-              $("#instructions").attr('float', 'right')
-              $("#instructions").attr('color', 'blue')
+              
+              // Prepending the gifDiv to the "#gifs-appear-re" div in the HTML
+              $("#gif-holder").prepend(gifDiv);
               var instuctions = "<h2>"+$("#instructions").html("click to toggle animation")+"</h2>";
+              $("#instructions").css('text-align', 'right')
+              // $("#instructions").css('color', 'blue')
               // $("#instructions").attr('id', 'instructions');
-              $("#gifs-appear-here").prepend(instructions)
+              $("#instructions").css("font-size", "1.5em")
+              $("#gif-holder").prepend($("#instructions"))
 
             }
           }

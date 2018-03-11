@@ -1,14 +1,23 @@
-@font-face {
-    /* font-family: 'StarTrek', 'Audiowide', monospace;
+/* @font-face {
+    font-family: 'StarTrek', 'Audiowide', monospace;
     src: url("fonts\Star Trek BT.ttf") format('truetype');
     font-weight: normal;
-    font-style: normal; */
-}
+    font-style: normal;
+} */
 
 
 #add-your-own {
     /* background-color: steelblue; */
     background-color: none;
+    color: #9FB5CC;
+    padding-left: 25px;
+}
+
+#banner{
+    /* color: #C7E2FF; */
+    color: #9FB5CC;
+    /* text-align: right; */
+    font-family: 'Orbitron', sans-serif;
 }
 
 body {
@@ -16,23 +25,35 @@ body {
     background-color:  #3D5D7F;  
 }
 
+.btn-submit, .btn-gif {
+    color: #9FB5CC;
+    margin: 5px auto 0px auto;
+    border-radius: 5px;
+    /* border: 1px blue solid; */
+    border: 0px;
+    float: left;
+    clear: left;
+    background-color: #3D5D7F
+}
+
+.btn-submit {
+    border: 1px #708090 solid;
+}
+
 
 #buttons-holder {
-    background-color: #3D5D7F;
+    padding-left: 25px;
+    /* background-color: #3D5D7F; */
     /* height: 80%;  */
     bottom: 0;
 }
 
-.btn-gif {
-    margin: 5px auto 0px auto;
-    border-radius: 5px;
-    border: 1px blue solid;
-    float: left;
-    clear: left;
+.col-3-md {
+    border-left: 2px #C7E2FF solid;
 }
 
 .col-9-md {
-    /* border: 5px black solid !important; */
+    /* border: 5px red solid !important; */
 }
 
 /* .container-fluid, .container {
@@ -42,6 +63,19 @@ body {
     background-color: aquamarine;
 } */
 
+.col-border {
+    position:static;
+    padding-left: 0px;
+}
+
+.col-border:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-left: 2px red solid;
+}
+
 #everything {
     padding: 0px 20px 0px 20px;
     height: 100%;
@@ -49,17 +83,32 @@ body {
     background-color: slategray;  
 }
 
+#form-label {
+    color: #9FB5CC;
+    /* color: #C7E2FF; */
+    font-family: 'Orbitron', sans-serif;
+    padding-left: 10px;
+}
+
 #gif-holder {
     float:left;
     background-color: #3D5D7F;
     height: 100%;
-    min-height: 300px;
+    min-height: 1000px;
     /* position: absolute; */
 
 }
 
+header {
+    min-height: 5em;
+    background-color: lightgray;
+}
+
 #instructions {
+    padding-left:25px;
     color: #C7E2FF;
+    /* text-align: right; */
+    font-family: 'Orbitron', sans-serif;
 }
 
 .item {
@@ -70,31 +119,25 @@ body {
     padding: 3px;
 }
 
-header {
-    min-height: 5em;
-    background-color: lightgray;
-}
-
 #logo {
     font-family: 'Orbitron', sans-serif;
     /* font-family: 'Audiowide', cursive; */
     padding: 5px;
+    padding-left: 25px;
     font-size: 3em;
 }
-
 
 #logo-name {
     font-family: 'Audiowide', monospace;
     font-style: oblique;
-
 }
 
-
-
 #name-box, #phrase-box {
-    border-radius: 25ps;
-    border: 1px black dotted;
-
+    border-radius: 5px;
+    border: 1px #3D5D7F solid;
+    background-color: #C6E3FF;
+    /* background-color: ; */
+    
 }
 .row {
     /* border: 2px green dashed !important; */
@@ -102,7 +145,7 @@ header {
 
 #sidebar-right {
     /* position: absolute; */
-    padding: 25px;
+    /* padding: 25px; */
     /* right: 0; */
     bottom:0;
     background-color: slategray;

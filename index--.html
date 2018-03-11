@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>In A Gif!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- reset browser styles -->
+  <link rel="assets/stylesheet" type="text/css" media="screen" href="styles/reset.css" />
+  <!-- bootstrap links -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+  <!-- liking into some common/popular google fonts, because -->
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Comfortaa|Dancing+Script|Great+Vibes|Kaushan+Script|Lato|Lobster|Lobster+Two|Marck+Script|Monoton|Open+Sans|Playfair+Display|Roboto|Roboto+Mono|Roboto+Slab|Rozha+One|Sacramento|Shrikhand|Slabo+27px|Source+Code+Pro"
+    rel="stylesheet">
+  <!-- and for good measure, here we store their css lines...
+        font-family: 'Roboto', sans-serif;
+        font-family: 'Open Sans', sans-serif;
+        font-family: 'Lato', sans-serif;
+        font-family: 'Roboto Mono', monospace;
+        font-family: 'Source Code Pro', monospace;
+        font-family: 'Roboto Slab', serif;
+        font-family: 'Playfair Display', serif;
+        font-family: 'Rozha One', serif;
+        font-family: 'Slabo 27px', serif;
+        font-family: 'Lobster', cursive;
+        font-family: 'Comfortaa', cursive;
+        font-family: 'Shrikhand', cursive;
+        font-family: 'Abril Fatface', cursive;
+        font-family: 'Lobster Two', cursive;
+        font-family: 'Monoton', cursive;
+        font-family: 'Dancing Script', cursive;
+        font-family: 'Great Vibes', cursive;
+        font-family: 'Sacramento', cursive;
+        font-family: 'Kaushan Script', cursive;
+        font-family: 'Marck Script', cursive; 
+    -->
+  <!-- adding jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="scripts/main.js"></script>
+</head>
+
+<body>
+  <header>
+    <div id="logo"></div>
+    <navbar></navbar>
+  </header>
+  <div id="everything" class="container-fluid">
+    <div class=row>
+         
+      <div id="gifs-appear-here" class="col-md-9">
+        </div>
+      <div id="right-sidebar" class="col-md-3">
+        <div id="add-your-own" class=row>
+          <form>
+            <h3>Add your own!</h3>
+            <p>Name: <input id="name-box" type="text" label="name here"></p>
+            <p>Phrase: <input id="phrase-box" type="text" label="name here"></p>
+            <button class="my-btn" type="submit">Add</button>
+          </form>
+        </div>
+        <h3 id="bannr">Click button to display gifs</h3>
+        <div id="the-buttons" class="row">
+          <button data-person="Captain Kirk" class="my-btn">
+            To boldy go ...
+          </button>
+          <button data-person="Spock" class="my-btn">
+            Fascinating.
+          <button data-person="Lucille Ball" class="my-btn">
+            The producer, really!
+          </button>
+          <button data-person="Gene Roddenberry" class="my-btn">
+            The creator
+          </button>
+          <button data-person="Majel Barrett" class="my-btn">
+            The 1st No. 1
+          </button>
+          <button data-person="Captain Picard" class="my-btn">
+            Make it so!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    // Event listener for all button elements
+    $("button").on("click", function () {
+      // In this case, the "this" keyword refers to the button that was clicked
+      var person = $(this).attr("data-person");
+
+      // Constructing a URL to search Giphy for the name of the person who said the quote
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        person + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+      // Performing our AJAX GET request
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        // After the data comes back from the API
+        .then(function (response) {
+          // Storing an array of results in the results variable
+          var results = response.data;
+
+          // Looping over every result item
+          for (var i = 0; i < results.length; i++) {
+
+            // Only taking action if the photo has an appropriate rating
+            if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+              // Creating a div with the class "item"
+              var gifDiv = $("<div class='item'>");
+
+              // Storing the result item's rating
+              var rating = results[i].rating;
+
+              // Creating a paragraph tag with the result item's rating
+              var p = $("<p>").text("Rating: " + rating);
+
+              // Creating an image tag
+              var personImage = $("<img>");
+
+              // Giving the image tag an src attribute of a proprty pulled off the
+              // result item
+              personImage.attr("src", results[i].images.fixed_height.url);
+
+              // Appending the paragraph and personImage we created to the "gifDiv" div we created
+              gifDiv.append(p);
+              gifDiv.append(personImage);
+
+              // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+              $("#gifs-appear-here").prepend(gifDiv);
+            }
+          }
+        });
+    });
+  </script>
+</body>
+
+</html>

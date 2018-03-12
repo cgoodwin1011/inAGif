@@ -68,8 +68,6 @@
         <div id="add-your-own" class=row>
           <form id="add-character">
             <h3 id="form-label">Add your own!</h3>
-            <!-- <p>Name:<br><input id="name-box" type="text" label="name here"></p>
-            <p>Button Label:<br><input id="phrase-box" type="text" label="phrase here"></p> -->
             <p><input id="name-box" type="text" value="character name"></p>
             <p><input id="phrase-box" type="text" value="button phrase"></p>
             <button class="btn-submit" type="submit">Add</button>
@@ -102,91 +100,144 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
     
-    var dummyName = true;
-    var dummyPhrase = false;
+  var dummyName = true;
+  var dummyPhrase = true;
+  var charactersAll = [];
 
-    function submitBtn() {
-      console.log("in submit button");
-    }
+  function submitBtn() {
+    console.log("in submit button");
+  }
 
-    $("#name-box").on('click', function() {
-      if (dummyName) {
-        $(this).val('');
-        $(this).css('color', 'black');
-        $(this).css('background-color', 'white');
-        dummyName = false;
-      } 
-    });
-
-    $("#name-box").on('blur', function() {
-      $(this).css('background-color', '#C6E3FF');
-    });
-
-    $("#name-box").on('focus', function() {
-      $(this).css('background-color', 'white');
-    });
+  // handleBtnClick()
 
 
-    $("#phrase-box").on('click', function() {
-      if (dummyPhrase) {
-        $(this).val('');
-        $(this).css('color', 'black');
-        $(this).css('background-color', 'white');
-        dummyPhrase = false;
-      }
-    });
-
-    $("#phrase-box").on('blur', function() {
-      $(this).css('background-color', '#C6E3FF');
-    });
-
-    $("#phrase-box").on('focus', function() {
-      $(this).css('background-color', 'white');
-    });
-
-    $("#add-character").submit(function( event ) {
-      console.log(event);
-      event.preventDefault();
-      var $inputs = $('#add-character :input');
-
-      characterName = $("#add-character :input[id=name-box]").val()
-      characterPhrase = $("#add-character :input[id=phrase-box]").val()
-      console.log($inputs);
-    });
-
-
-    function fetchData(inputName) {
-      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      inputName + "&api_key=NLxjdcO4JQ8nb9OxWKIS5lWQVaIwmxUn&limit=10";
-  
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).then(function (response) {
-        return response.data;
-      })
-
-
-    function addData(response, characterArray) {
-      var gifRecord = {
+  function addCharacter(inputName, inputPhrase, characterArray) {
+    var gifList = {
       id: 0,
-      person: '',
-      rating: '',
-      phrase: '',
-      dataAnimate: '',
-      dataStill: '',
-      dataStatus: 'still'
+      person: inputName,
+      phrase: inputPhrase,
+      apiResponse: [],
+    }
+    handlePerson(inputName);
+  }
+
+  function displayCharacterArray(inputCharacterArray) {
+    // var characterIndex = 0;
+    debugger;
+    console.log("inputCharacterArray is "+inputCharacterArray[0]);
+    for (var characterIndex = 0; characterIndex < inputCharacterArray.length; characterIndex++ ) {
+      for (var i = 0; i < inputCharacterArray.length; i++) {
+        console.log(results[i]);
+
+        // screen out inappropiate conents
+        if (inputCharacterArray[i].rating !== "r" && inputCharacterArray[i].rating !== "pg-13") {
+
+          // Creating a div with the class "item"
+          var gifDiv = $("<div class='item'>");
+          gifDiv.attr('id', i + "-set");
+
+          // Storing the result item's rating
+          var rating = inputCharacterArray[i].rating;
+
+          // Creating a paragraph tag with the result item's rating
+          var p = $("<p class='rating'>").text("Rating: " + rating);
+
+          // get name to display
+          var name = "<p>" + inputCharacterArray[i].person + "</p>";
+
+          // Creating an image tag
+          var personImage = $("<img>");
+
+          // acquiring info for still/antimated gifs
+          // personImage.attr("src", results[i].images.fixed_height.url);
+          personImage.attr("data-animate", inputCharacterArray[i].images.fixed_height.url);
+          personImage.attr("src", inputCharacterArray[i].images.fixed_height_still.url);
+          personImage.attr("data-still", inputCharacterArray[i].images.fixed_height_still.url);
+          personImage.attr("data-state", "still");
+          personImage.addClass("clicking-photo");
+          // console.log(personImage)
+
+          gifDiv.append(name);
+          gifDiv.append(personImage);
+          gifDiv.append(p);
+
+          // Prepending the gifDiv to the "#gifs-appear-re" div in the HTML
+          $("#gif-holder").prepend(gifDiv);
+          var instuctions = "<h2>" + $("#instructions").html("click picture to<br>toggle animation") + "</h2>";
+          // $("#instructions").attr('id', 'instructions');
+          $("#instructions").css("font-size", "1.5em")
+          $("#instructions").css('text-align', 'right')
+          $("#gif-holder").prepend($("#instructions"))
+        }
       }
+    }
+  }
+
+  $("#name-box").on('click', function() {
+    if (dummyName) {
+      $(this).val('');
+      $(this).css('color', 'black');
+      $(this).css('background-color', 'white');
+      dummyName = false;
+    } 
+  });
+
+  $("#name-box").on('blur', function() {
+    $(this).css('background-color', '#C6E3FF');
+    if ($(this).val().trim() == '') {
+      $(this).css("color", "#3D5D7F");
+      $(this).val("character name");
+      dummyName = true;
+    }
+  });
+
+  $("#name-box").on('focus', function() {
+    $(this).css('background-color', 'white');
+  });
 
 
+  $("#phrase-box").on('click', function() {
+    if (dummyPhrase) {
+      $(this).val('');
+      $(this).css('color', 'black');
+      $(this).css('background-color', 'white');
+      dummyPhrase = false;
+      // console.log(dummyPhrase);
+    }
+  });
 
+  $("#phrase-box").on('blur', function() {
+    $(this).css('background-color', '#C6E3FF');
+    if ($(this).val().trim() == '') {
+      console.log($(this).val().trim())
+      $(this).css("color", "#3D5D7F");
+      $(this).val("button phrase");
+      dummyPhrase = true;
+    } 
+  });
 
-}
+  $("#phrase-box").on('focus', function() {
+    $(this).css('background-color', 'white');
+  });
 
-
-
-
-     }
+  $("#add-character").submit(function( event ) {
+    // console.log(event);
+    event.preventDefault();
+    var $inputs = $('#add-character :input');
+    // submitBtn();
+    if (dummyName || dummyPhrase) {
+      if (dummyName && dummyPhrase) {
+        alert("Please enter a character name and a slogan to put on the button.");
+      } else if (dummyName && !dummyPhrase) {
+        alert("Please enter a character name.")
+      } else if (!dummyName && dummyPhrase) {
+        alert("Please enter a phrase to put on the button")
+      }
+    } 
+    characterName = $("#add-character :input[id=name-box]").val()
+    characterPhrase = $("#add-character :input[id=phrase-box]").val()
+    addCharacter(characterName, characterPhrase, charactersAll)
+  });
 
 
     // Event listener for all button elements

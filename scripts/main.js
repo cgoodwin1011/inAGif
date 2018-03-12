@@ -17,7 +17,10 @@ function toggleMotion(inputEvent) {
 function handleBtnClick(inputBtn) {
   // In this case, the "this" keyword refers to the button that was clicked
   var person = inputBtn.attr("data-person");
+  handlePerson(person);
+}
 
+function handlePerson(person) {
   // Constructing a URL to search Giphy for the name of the person who said the quote
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
     person + "&api_key=NLxjdcO4JQ8nb9OxWKIS5lWQVaIwmxUn&limit=10";
@@ -72,9 +75,9 @@ function handleBtnClick(inputBtn) {
           $("#gif-holder").prepend(gifDiv);
           var instuctions = "<h2>" + $("#instructions").html("click picture to<br>toggle animation") + "</h2>";
           // $("#instructions").attr('id', 'instructions');
-          $("#instructions").css("font-size", "1.5em")
-          $("#instructions").css('text-align', 'right')
-          $("#gif-holder").prepend($("#instructions"))
+          $("#instructions").css("font-size", "1.5em");
+          $("#instructions").css('text-align', 'right');
+          $("#gif-holder").prepend($("#instructions"));
         }
       }
     });

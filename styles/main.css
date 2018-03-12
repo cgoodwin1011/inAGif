@@ -138,6 +138,7 @@ header {
 
 #name-box, #phrase-box {
     border-radius: 5px;
+    color: #3D5D7F;
     border: 1px #3D5D7F solid;
     background-color: #C6E3FF;
     /* background-color: ; */

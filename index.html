@@ -27,15 +27,15 @@
       font-family: 'Roboto', sans-serif;
       font-family: 'Open Sans', sans-serif;
       font-family: 'Lato', sans-serif;
-      
+
       font-family: 'Roboto Mono', monospace;
       font-family: 'Source Code Pro', monospace;
-      
+
       font-family: 'Roboto Slab', serif;
       font-family: 'Playfair Display', serif;
       font-family: 'Rozha One', serif;
       font-family: 'Slabo 27px', serif;
-      
+
       font-family: 'Audiowide', cursive;
       font-family: 'Lobster', cursive;
       font-family: 'Comfortaa', cursive;
@@ -47,7 +47,7 @@
       font-family: 'Great Vibes', cursive;
       font-family: 'Sacramento', cursive;
       font-family: 'Kaushan Script', cursive;
-      font-family: 'Marck Script', cursive; 
+      font-family: 'Marck Script', cursive;
     -->
   <!-- adding jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -73,7 +73,7 @@
             <button class="btn-submit" type="submit">Add</button>
           </form>
         </div>
-        
+
         <div id="buttons-holder" class="row">
           <h3 id="banner">Click button to display gifs</h3>
           <button data-person="Captain Kirk" class="btn-gif">
@@ -99,79 +99,7 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
-    
-  var dummyName = true;
-  var dummyPhrase = true;
-  var charactersAll = [];
 
-  function submitBtn() {
-    console.log("in submit button");
-  }
-
-  // handleBtnClick()
-
-
-  function addCharacter(inputName, inputPhrase, characterArray) {
-    var gifList = {
-      id: 0,
-      person: inputName,
-      phrase: inputPhrase,
-      apiResponse: [],
-    }
-    handlePerson(inputName);
-  }
-
-  function displayCharacterArray(inputCharacterArray) {
-    // var characterIndex = 0;
-    debugger;
-    console.log("inputCharacterArray is "+inputCharacterArray[0]);
-    for (var characterIndex = 0; characterIndex < inputCharacterArray.length; characterIndex++ ) {
-      for (var i = 0; i < inputCharacterArray.length; i++) {
-        console.log(results[i]);
-
-        // screen out inappropiate conents
-        if (inputCharacterArray[i].rating !== "r" && inputCharacterArray[i].rating !== "pg-13") {
-
-          // Creating a div with the class "item"
-          var gifDiv = $("<div class='item'>");
-          gifDiv.attr('id', i + "-set");
-
-          // Storing the result item's rating
-          var rating = inputCharacterArray[i].rating;
-
-          // Creating a paragraph tag with the result item's rating
-          var p = $("<p class='rating'>").text("Rating: " + rating);
-
-          // get name to display
-          var name = "<p>" + inputCharacterArray[i].person + "</p>";
-
-          // Creating an image tag
-          var personImage = $("<img>");
-
-          // acquiring info for still/antimated gifs
-          // personImage.attr("src", results[i].images.fixed_height.url);
-          personImage.attr("data-animate", inputCharacterArray[i].images.fixed_height.url);
-          personImage.attr("src", inputCharacterArray[i].images.fixed_height_still.url);
-          personImage.attr("data-still", inputCharacterArray[i].images.fixed_height_still.url);
-          personImage.attr("data-state", "still");
-          personImage.addClass("clicking-photo");
-          // console.log(personImage)
-
-          gifDiv.append(name);
-          gifDiv.append(personImage);
-          gifDiv.append(p);
-
-          // Prepending the gifDiv to the "#gifs-appear-re" div in the HTML
-          $("#gif-holder").prepend(gifDiv);
-          var instuctions = "<h2>" + $("#instructions").html("click picture to<br>toggle animation") + "</h2>";
-          // $("#instructions").attr('id', 'instructions');
-          $("#instructions").css("font-size", "1.5em")
-          $("#instructions").css('text-align', 'right')
-          $("#gif-holder").prepend($("#instructions"))
-        }
-      }
-    }
-  }
 
   $("#name-box").on('click', function() {
     if (dummyName) {
@@ -179,7 +107,7 @@
       $(this).css('color', 'black');
       $(this).css('background-color', 'white');
       dummyName = false;
-    } 
+    }
   });
 
   $("#name-box").on('blur', function() {
@@ -195,25 +123,26 @@
     $(this).css('background-color', 'white');
   });
 
-
   $("#phrase-box").on('click', function() {
     if (dummyPhrase) {
       $(this).val('');
       $(this).css('color', 'black');
       $(this).css('background-color', 'white');
       dummyPhrase = false;
-      // console.log(dummyPhrase);
+      // console.log("in phrase box "+dummyPhrase);
     }
   });
 
   $("#phrase-box").on('blur', function() {
     $(this).css('background-color', '#C6E3FF');
+    // console.log(dummyPhrase);
+    // console.log($(this).val().trim());
     if ($(this).val().trim() == '') {
-      console.log($(this).val().trim())
+      // console.log($(this).val().trim())
       $(this).css("color", "#3D5D7F");
       $(this).val("button phrase");
       dummyPhrase = true;
-    } 
+    }
   });
 
   $("#phrase-box").on('focus', function() {
@@ -221,10 +150,9 @@
   });
 
   $("#add-character").submit(function( event ) {
-    // console.log(event);
     event.preventDefault();
     var $inputs = $('#add-character :input');
-    // submitBtn();
+    // console.log(dummyName, dummyPhrase)
     if (dummyName || dummyPhrase) {
       if (dummyName && dummyPhrase) {
         alert("Please enter a character name and a slogan to put on the button.");
@@ -233,21 +161,22 @@
       } else if (!dummyName && dummyPhrase) {
         alert("Please enter a phrase to put on the button")
       }
-    } 
-    characterName = $("#add-character :input[id=name-box]").val()
-    characterPhrase = $("#add-character :input[id=phrase-box]").val()
-    addCharacter(characterName, characterPhrase, charactersAll)
+    }
+    characterName = $("#add-character :input[id=name-box]").val();
+    characterPhrase = $("#add-character :input[id=phrase-box]").val();
+    addCharacter(characterName, characterPhrase, charactersAll);
+    makeBtn(characterName, characterPhrase);
   });
 
+  // Event listener for all button elements
+  $(".btn-gif").on("click", function () {
+    handleBtnClick($(this));
+    console.log("got event");
+  });
 
-    // Event listener for all button elements
-    $(".btn-gif").on("click", function () {
-      handleBtnClick($(this));
-    });
-
-    $('#gif-holder').on('click', function(event) {
-      toggleMotion(event);
-    });
+  $('#gif-holder').on('click', function(event) {
+    toggleMotion(event);
+  });
   </script>
 </body>
 

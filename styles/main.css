@@ -1,9 +1,9 @@
-/* @font-face {
-    font-family: 'StarTrek', 'Audiowide', monospace;
-    src: url("fonts\Star Trek BT.ttf") format('truetype');
+@font-face {
+    font-family: 'StarTrek';
+    src: url("fonts/StarTrekBT-regular.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
-} */
+}
 
 #add-your-own {
     background-color: none;
@@ -12,7 +12,7 @@
 }
 
 #banner{
-    /* color: #C7E2FF; */
+    /* color: #C6E3FF; */
     color: #9FB5CC;
     /* text-align: right; */
     font-family: 'Orbitron', sans-serif;
@@ -36,8 +36,8 @@ body {
 
 .btn-submit {
     border: 1px #708090 solid;
-    display: block;
-    float: right;
+    /* display: block; */
+    /* float: right; */
     margin-right:20%;
 }
 
@@ -49,7 +49,7 @@ body {
 }
 
 .col-3-md {
-    border-left: 2px #C7E2FF solid;
+    border-left: 2px #C6E3FF solid;
 }
 
 .col-9-md {
@@ -73,7 +73,7 @@ body {
     position: absolute;
     top: 0;
     bottom: 0;
-    border-left: 1px #C7E2FF solid;
+    border-left: 1px #C6E3FF solid;
 }
 
 #everything {
@@ -81,6 +81,17 @@ body {
     height: 100%;
     position:relative;
     background-color: slategray;
+}
+
+#explainer {
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+    font-size: medium;
+    color: black;
+    /* float: left; */
+    clear: left;
+    font-weight: 100;
+    margin-top: 10px;
 }
 
 #form-label {
@@ -105,7 +116,7 @@ header {
     padding-left:10px;
     padding-top: 10px;
     text-align: left;
-    color: #C7E2FF;
+    color: #C6E3FF;
     font-family: 'Orbitron', sans-serif;
 }
 
@@ -118,6 +129,7 @@ header {
 }
 
 #logo {
+    color: black;
     display: inline-block;
     font-family: 'Orbitron', sans-serif;
     /* font-family: 'Audiowide', cursive; */
@@ -126,11 +138,15 @@ header {
     padding-left: 25px;
     font-size: 3em;
     width: 75%;
+    background-color:none;
 }
 
 #logo-name {
-    font-family: 'Audiowide', monospace;
-    font-style: oblique;
+    color: black;
+    /* font-family: 'Audiowide', monospace; */
+    font-family: 'StarTrek';
+    font-size: 2em;
+    /* font-style: oblique; */
 }
 
 #name-box, #phrase-box {
@@ -146,8 +162,32 @@ navbar {
     display: block; */
     width: 25%;
     /* background-color:pink; */
+    float: right;
+    padding: 10px;
 }
 
+#ratings-menu {
+    background-color: lightgray;
+    float: right;
+    clear: right;
+}
+
+#ratings-menu-label {
+    float: right;
+}
+
+#color-menu-label {
+    float: right;
+    clear: right;
+    margin-top: 10px;
+}
+
+
+#color-menu {
+    background-color: lightgray;
+    float: right;
+    clear: right;
+}
 .row {
     /* border: 2px green dashed !important; */
 }
@@ -158,7 +198,7 @@ navbar {
     /* right: 0; */
     bottom:0;
     background-color: slategray;
-    /* border-left: 1px #C7E2FF solid; */
+    /* border-left: 1px #C6E3FF solid; */
     min-height: 1000px;
     height: 100%;
 }

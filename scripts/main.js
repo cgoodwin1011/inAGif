@@ -24,31 +24,30 @@ var majel = {
   phrase: "The 1st No. 1"
 }
 
-var pricard = {
+var picard = {
   name: "Captain Picard",
   phrase: "Make it so!"
 }
 
 var dummyName = true;
 var dummyPhrase = true;
-var charactersAll = [];
+var charactersAll = [kirk, spock, lucille, gene, majel, picard];
 var character = {
   name: '',
   phrase: '',
 }
+var maxLevel = 'PG'
 
-function makeBtn(inPerson, inPhrase) {
-  theHTML = "<button data-person='"+inPerson+"' class='btn-gif'>"+inPhrase+"</button>"
-  $("#buttons-holder").append(theHTML);
-}
 
-function addCharacter(inputName, inputPhrase, characterArray) {
-  var characterEntry = {
-    person: inputName,
-    phrase: inputPhrase,
-  }
-  characterArray.push(characterEntry);
-  console.log(characterArray)
+function resetTextFields() {
+  dummyName = true;
+  dummyPhrase = true;
+  $("#name-box").css('color', '#3D5D7F');
+  $("#name-box").css('background-color', '#C6E3FF');
+  $("#phrase-box").css('color', '#3D5D7F');
+  $("#phrase-box").css('background-color', '#C6E3FF');
+  $("#name-box").val('character name');
+  $("#phrase-box").val('button phrase');
 }
 
 function toggleMotion(inputEvent) {
@@ -70,6 +69,55 @@ function handleBtnClick(inputBtn) {
   getCharacterGifs(person);
 }
 
+function makeBtn(inPerson, inPhrase) {
+  theHTML = "<button data-person='"+inPerson+"' class='btn-gif'>"+inPhrase+"</button>"
+  $("#buttons-holder").append(theHTML);
+}
+
+function initialize(characterArray) {
+  for (i=0; i < characterArray.length; i++) {
+    makeBtn(characterArray[i].name, characterArray[i].phrase)
+  }
+}
+
+function addCharacter(inputName, inputPhrase, characterArray) {
+  var characterEntry = {
+    person: inputName,
+    phrase: inputPhrase,
+  }
+  characterArray.push(characterEntry);
+  console.log(characterArray)
+}
+
+function tooHot(maxAllowedLevel, thisGifLevel) {
+  switch(maxAllowedLevel) {
+    case 'R' || 'X':
+      return false;
+      break;
+    case 'PG-13':
+      if (thisGifLevel == 'r') {
+        return true;
+      } else {
+        return false;
+      };
+      break;
+    case 'PG':
+      if (thisGifLevel == 'r' || thisGifLevel == 'pg-13') {
+        return true;
+      } else {
+        return false;
+      };
+      break;     
+    case 'G':
+      if (thisGifLevel != 'g') {
+        return false;
+      } else {
+        return true;
+      }
+      break;
+  }
+}
+
 function getCharacterGifs(inPerson) {
   // Constructing a URL to search Giphy for the name of the person who said the quote
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -82,17 +130,17 @@ function getCharacterGifs(inPerson) {
     })
     // After the data comes back from the API
     .then(function (response) {
-      console.log("getting gifs")
+      // console.log("getting gifs")
       // Storing an array of results in the results variable
       var results = response.data;
-      // var screenedResults = [];
 
-      // Looping over every result item
+      // Loop over results
       for (var i = 0; i < results.length; i++) {
 
         // screen out inappropriate rating
-        if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
-          console.log("results[i] is"+results[i])
+        // if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+        if (!tooHot(maxLevel, results[i].rating)) {
+          // console.log("results[i] is"+results[i])
 
           var gifDiv = $("<div class='item'>");
           gifDiv.attr('id', i + "-set");
@@ -131,55 +179,3 @@ function getCharacterGifs(inPerson) {
       }
     });
 }
-
-
-
-  // function displayCharacterArray(inputCharacterArray) {
-  //   // var characterIndex = 0;
-  //   debugger;
-  //   console.log("inputCharacterArray is "+inputCharacterArray[0]);
-  //   for (var characterIndex = 0; characterIndex < inputCharacterArray.length; characterIndex++ ) {
-  //     for (var i = 0; i < inputCharacterArray.length; i++) {
-
-  //       // screen out inappropiate conents
-  //       if (inputCharacterArray[i].rating !== "r" && inputCharacterArray[i].rating !== "pg-13") {
-
-  //         // Creating a div with the class "item"
-  //         var gifDiv = $("<div class='item'>");
-  //         gifDiv.attr('id', i + "-set");
-
-  //         // Storing the result item's rating
-  //         var rating = inputCharacterArray[i].rating;
-
-  //         // Creating a paragraph tag with the result item's rating
-  //         var p = $("<p class='rating'>").text("Rating: " + rating);
-
-  //         // get name to display
-  //         var name = "<p>" + inputCharacterArray[i].person + "</p>";
-
-  //         // Creating an image tag
-  //         var personImage = $("<img>");
-
-  //         // acquiring info for still/antimated gifs
-  //         // personImage.attr("src", results[i].images.fixed_height.url);
-  //         personImage.attr("data-animate", inputCharacterArray[i].images.fixed_height.url);
-  //         personImage.attr("src", inputCharacterArray[i].images.fixed_height_still.url);
-  //         personImage.attr("data-still", inputCharacterArray[i].images.fixed_height_still.url);
-  //         personImage.attr("data-state", "still");
-  //         personImage.addClass("clicking-photo");
-
-  //         gifDiv.append(name);
-  //         gifDiv.append(personImage);
-  //         gifDiv.append(p);
-
-  //         // Prepending the gifDiv to the "#gifs-appear-re" div in the HTML
-  //         $("#gif-holder").prepend(gifDiv);
-  //         var instuctions = "<h2>" + $("#instructions").html("click picture to<br>toggle animation") + "</h2>";
-  //         // $("#instructions").attr('id', 'instructions');
-  //         $("#instructions").css("font-size", "1.5em")
-  //         $("#instructions").css('text-align', 'right')
-  //         $("#gif-holder").prepend($("#instructions"))
-  //       }
-  //     }
-  //   }
-  // }

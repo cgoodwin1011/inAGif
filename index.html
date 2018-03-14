@@ -57,7 +57,15 @@
 <body>
   <header>
     <div id="logo"><p>in a gif  <span id="logo-name">Star Trek !</span></p></div>
-    <navbar></navbar>
+    <navbar>Maximum Rating:
+      <select id="ratings-menu">
+        <option value="PG">PG</option>
+        <option value="G">G</option>
+        <option value="PG-13">PG-13</option>
+        <option value="R">R</option>
+        <option value="X">X</option>
+      </select>
+    </navbar>
   </header>
   <div id="everything" class="container-fluid">
     <div id="row-main" class="row">
@@ -70,13 +78,13 @@
             <h3 id="form-label">Add your own!</h3>
             <p><input id="name-box" type="text" value="character name"></p>
             <p><input id="phrase-box" type="text" value="button phrase"></p>
-            <button class="btn-submit" type="submit">Add</button>
+            <button id="submit-button" class="btn-submit" type="submit">Add</button>
           </form>
         </div>
 
         <div id="buttons-holder" class="row">
           <h3 id="banner">Click button to display gifs</h3>
-          <button data-person="Captain Kirk" class="btn-gif">
+          <!-- <button data-person="Captain Kirk" class="btn-gif">
             To boldy go ...
           </button>
           <button data-person="Spock" class="btn-gif">
@@ -92,7 +100,7 @@
           </button>
           <button data-person="Captain Picard" class="btn-gif">
             Make it so!
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -123,24 +131,39 @@
     $(this).css('background-color', 'white');
   });
 
+  $("#name-box").on('keyup', function() {
+    dummyName = false;
+  })
+
+
   $("#phrase-box").on('click', function() {
     if (dummyPhrase) {
       $(this).val('');
       $(this).css('color', 'black');
       $(this).css('background-color', 'white');
       dummyPhrase = false;
-      // console.log("in phrase box "+dummyPhrase);
+      console.log("in phrase box dummyPhrase is"+dummyPhrase);
     }
   });
 
+  $("#phrase-box").on('keyup', function() {
+    dummyPhrase = false;
+  })
+
   $("#phrase-box").on('blur', function() {
+    var $input = $("#phrase-box");
+    var newPhrase = $(this).val().trim();
+    // console.log("newPhrass is "+newPhrase);
     $(this).css('background-color', '#C6E3FF');
-    // console.log(dummyPhrase);
-    // console.log($(this).val().trim());
-    if ($(this).val().trim() == '') {
-      // console.log($(this).val().trim())
+    if (newPhrase.length > 0) {
+      // console.log("trimmed phrase is "+$(this).val().trim())
       $(this).css("color", "#3D5D7F");
+      // $(this).val("button phrase");
+      dummyPhrase = false;
+    } else {
+      console.log("the program thinks the phrase has no length")
       $(this).val("button phrase");
+      $(this).css('color', '#3D5D7F');
       dummyPhrase = true;
     }
   });
@@ -152,7 +175,6 @@
   $("#add-character").submit(function( event ) {
     event.preventDefault();
     var $inputs = $('#add-character :input');
-    // console.log(dummyName, dummyPhrase)
     if (dummyName || dummyPhrase) {
       if (dummyName && dummyPhrase) {
         alert("Please enter a character name and a slogan to put on the button.");
@@ -165,7 +187,9 @@
     characterName = $("#add-character :input[id=name-box]").val();
     characterPhrase = $("#add-character :input[id=phrase-box]").val();
     addCharacter(characterName, characterPhrase, charactersAll);
+    getCharacterGifs(characterName);
     makeBtn(characterName, characterPhrase);
+    resetTextFields();
   });
 
   // Event listener for all button elements
@@ -174,10 +198,27 @@
     console.log("got event");
   });
 
+  
   $('#gif-holder').on('click', function(event) {
     toggleMotion(event);
   });
+
+
+  $(document).on('click', '.btn-gif', function ()  {
+      handleBtnClick($(this));
+    })
+
+
+  $("#ratings-menu").on('change', function() {
+    maxLevel = $("#ratings-menu").val();
+    console.log(maxLevel);
+  });
+
+
+  initialize(charactersAll);
   </script>
 </body>
 
 </html>
+
+

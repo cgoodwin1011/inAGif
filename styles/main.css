@@ -144,7 +144,8 @@ header {
 #logo-name {
     color: black;
     /* font-family: 'Audiowide', monospace; */
-    font-family: 'StarTrek';
+    /*font-family: 'StarTrek';*/
+    font-family: 'Oleo Script', cursive;
     font-size: 2em;
     /* font-style: oblique; */
 }
